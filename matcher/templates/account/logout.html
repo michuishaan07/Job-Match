@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Logout - Job Match</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background-color: #030712;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #343a40;
+    }
+    .navbar-brand {
+      color: #fff !important;
+    }
+    .container {
+      padding-top: 60px;
+      min-height: 100vh;
+    }
+    .card {
+      background-color: #111827;
+      color: #fff;
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .btn {
+      background-color: #36A2EB;
+      border-color: #36A2EB;
+    }
+    .btn:hover {
+      background-color: #2E8ECE;
+      border-color: #2E8ECE;
+    }
+    a {
+      color: #36A2EB;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #2E8ECE;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">Job Match</a>
+      <div class="ms-auto">
+        <a href="{% url 'account_login' %}" class="btn btn-primary me-2">Login</a>
+        <a href="{% url 'account_signup' %}" class="btn btn-primary">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Logout Confirmation -->
+  <div class="container">
+    <div class="card shadow text-center">
+      <h2 class="mb-4">👋 You've been logged out</h2>
+      <p class="lead">Thanks for visiting Job Match.</p>
+      <p>You can log in again or return to the homepage.</p>
+      <div class="d-grid gap-2 mt-4">
+        <a href="{% url 'account_login' %}" class="btn btn-primary">Login Again</a>
+        <a href="{% url 'home' %}" class="btn btn-outline-light">Back to Home</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

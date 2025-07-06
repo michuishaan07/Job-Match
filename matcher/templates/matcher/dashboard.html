@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Job Match Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: #030712;
+      min-height: 100vh;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .navbar {
+      background-color: #343a40;
+    }
+    .navbar-brand {
+      color: #fff !important;
+    }
+    .card {
+      border-radius: 16px;
+      background-color: #111827;
+      color: #ffffff;
+    }
+    .card-title {
+      font-weight: 600;
+      color: #ffffff;
+    }
+    h2, h5 {
+      color: white;
+    }
+    canvas {
+      max-height: 350px !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">Job Match</a>
+      <div class="ms-auto">
+        {% if user.is_authenticated %}
+          <a href="{% url 'dashboard' %}" class="btn btn-primary me-2">Dashboard</a>
+          <a href="{% url 'resume_upload' %}" class="btn btn-primary me-2">Upload Resume</a>
+          <a href="{% url 'account_logout' %}" class="btn btn-primary">Logout</a>
+        {% else %}
+          <a href="{% url 'account_login' %}" class="btn btn-primary me-2">Login</a>
+          <a href="{% url 'account_signup' %}" class="btn btn-primary">Sign Up</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+  <!-- Dashboard -->
+  <div class="container-fluid">
+    <h2 class="mb-4 fw-bold text-center">📊 Job Market Insights Dashboard</h2>
+
+    <div class="row g-3">
+      <!-- Job Roles -->
+      <div class="col-md-6">
+        <div class="card shadow-sm p-3">
+          <h5 class="card-title">Top 5 Job Roles</h5>
+          <canvas id="jobRoleChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Cities -->
+      <div class="col-md-6">
+        <div class="card shadow-sm p-3">
+          <h5 class="card-title">Top 5 Cities with Most Jobs</h5>
+          <canvas id="jobCityChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="col-md-6">
+        <div class="card shadow-sm p-3">
+          <h5 class="card-title">Top 5 In-Demand Skills</h5>
+          <canvas id="skillsChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Companies -->
+      <div class="col-md-6">
+        <div class="card shadow-sm p-3">
+          <h5 class="card-title">Top 5 Companies Hiring</h5>
+          <canvas id="companyChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart.js Script -->
+  <script>
+    const barOptions = {
+      plugins: {
+        legend: {
+          labels: { color: 'white' }
+        },
+        tooltip: {
+          bodyColor: 'white',
+          titleColor: 'white'
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: 'white' },
+          grid: { color: '#374151' }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: { color: 'white' },
+          grid: { color: '#374151' }
+        }
+      }
+    };
+  
+    const circularOptions = {
+      plugins: {
+        legend: {
+          labels: { color: 'white' },
+          position: 'right'
+        },
+        tooltip: {
+          bodyColor: 'white',
+          titleColor: 'white'
+        }
+      },
+      // Remove scales for circular charts to avoid grid lines
+      scales: {
+        x: { display: false },
+        y: { display: false }
+      }
+    };
+  
+    const doughnutOptions = {
+      plugins: {
+        legend: {
+          labels: { color: 'white' },
+          position: 'bottom'
+        },
+        tooltip: {
+          bodyColor: 'white',
+          titleColor: 'white'
+        }
+      },
+      // Remove scales for doughnut charts to avoid grid lines
+      scales: {
+        x: { display: false },
+        y: { display: false }
+      }
+    };
+  
+    // Role Chart (Pie)
+    new Chart(document.getElementById("jobRoleChart"), {
+      type: "pie",
+      data: {
+        labels: {{ role_labels|safe }},
+        datasets: [{
+          data: {{ role_counts|safe }},
+          backgroundColor: {{ colors|safe }}
+        }]
+      },
+      options: circularOptions
+    });
+  
+    // City Chart (Bar)
+    new Chart(document.getElementById("jobCityChart"), {
+      type: "bar",
+      data: {
+        labels: {{ city_labels|safe }},
+        datasets: [{
+          label: "Job Count",
+          data: {{ city_counts|safe }},
+          backgroundColor: {{ colors|safe }}
+        }]
+      },
+      options: barOptions
+    });
+  
+    // Skills Chart (Doughnut)
+    new Chart(document.getElementById("skillsChart"), {
+      type: "doughnut",
+      data: {
+        labels: {{ skill_labels|safe }},
+        datasets: [{
+          data: {{ skill_values|safe }},
+          backgroundColor: {{ skill_colors|safe }}
+        }]
+      },
+      options: doughnutOptions
+    });
+  
+    // Companies Chart (Bar)
+    new Chart(document.getElementById("companyChart"), {
+      type: "bar",
+      data: {
+        labels: {{ company_labels|safe }},
+        datasets: [{
+          label: "Job Postings",
+          data: {{ company_counts|safe }},
+          backgroundColor: {{ company_colors|safe }}
+        }]
+      },
+      options: barOptions
+    });
+  </script>
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
