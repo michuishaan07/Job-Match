@@ -37,4 +37,3 @@ uvicorn==0.34.2             # ASGI server (optional)
 whitenoise==6.9.0           # Static files
 Werkzeug==3.1.3             # WSGI utility
 PyPDF2==3.0.1
-pdfplumber==0.11.
