@@ -1,0 +1,1 @@
+web: gunicorn job_matcher.wsgi:application --log-file -
