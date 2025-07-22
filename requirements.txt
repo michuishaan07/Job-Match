@@ -4,7 +4,8 @@ asgiref==3.8.1              # Django dependency
 attrs==24.2.0
 beautifulsoup4==4.13.3      # For HTML parsing
 boto3==1.37.33              # AWS SDK
-botocore==1.37.33           # AWS core
+botocore==1.37.33
+decouple=0.0.7           # AWS core
 certifi==2025.4.26          # SSL certs
 cffi==1.17.0                # C Foreign Function Interface
 chardet==5.2.0              # Encoding detection
@@ -29,7 +30,8 @@ pydantic==2.11.3            # Data validation
 python-dateutil==2.8.2      # Date handling
 python-dotenv==1.1.0        # Environment variables
 PyYAML==6.0.1               # YAML parsing
-requests==2.32.3            # HTTP requests
+requests==2.32.3     
+selenium==4.33.0       # HTTP requests
 sqlparse==0.5.3             # SQL parsing
 typing_extensions==4.13.2   # Type hints
 urllib3==2.4.0              # HTTP client
