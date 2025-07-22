@@ -5,7 +5,7 @@ attrs==24.2.0
 beautifulsoup4==4.13.3      # For HTML parsing
 boto3==1.37.33              # AWS SDK
 botocore==1.37.33
-decouple=0.0.7           # AWS core
+decouple==0.0.7         # AWS core
 certifi==2025.4.26          # SSL certs
 cffi==1.17.0                # C Foreign Function Interface
 chardet==5.2.0              # Encoding detection
